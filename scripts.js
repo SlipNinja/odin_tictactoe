@@ -4,6 +4,11 @@ const gameBoard = (() => {
         ["", "", ""],
         ["", "", ""]
    ];
+   const boardDisplay = document.getElementById("board");
+
+   for(let box of boardDisplay.children){
+        box.onclick = boxClicked;
+   }
 
    let draw = false;
    let win = false;
@@ -75,6 +80,7 @@ const gameBoard = (() => {
         }
 
         board[x][y] = player.getMark();
+        drawGame();
 
         if(gameWon()) {
             console.log(`${player.getName()} won the game !`);
@@ -90,7 +96,19 @@ const gameBoard = (() => {
         console.table(board);
     };
 
-   return {play, isGameOver, isDraw, isWin, print};
+    const drawGame = () => {
+        for (let box of boardDisplay.children) {
+            box.innerHTML = board[box.dataset.row][box.dataset.col];
+        }
+    };
+
+    const clearGame = () => {
+        for (let box of boardDisplay.children) {
+            box.innerHTML = "";
+        }
+    };
+
+   return {play, isGameOver, isDraw, isWin, clearGame, print};
 })()
 
 
@@ -104,6 +122,10 @@ const Player = (playerName, playerMark) => {
     };
 
     return {getMark, getName};
+}
+
+function boxClicked(e) {
+    console.log(e.srcElement);
 }
 
 
