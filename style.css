@@ -5,6 +5,32 @@
 
 body {
     background-color: gray;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    gap: 40px;
+}
+
+.header {
+    background-color: aquamarine;
+    box-shadow: 0 5px 5px aquamarine;
+}
+
+.title-header {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.controls {
+    display: flex;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+.controls button {
+    height: 30px;
+    width: 150px;
+    font-size: 20px;
 }
 
 #board {
@@ -14,6 +40,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 5px;
+    justify-self: center;
 }
 
 .box {
@@ -22,4 +49,10 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 150px;
+}
+
+#logs {
+    justify-self: center;
+    text-align: center;
+    font-size: 20px;
 }

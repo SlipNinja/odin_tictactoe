@@ -124,14 +124,34 @@ const Player = (playerName, playerMark) => {
     return {getMark, getName};
 }
 
+const player1 = Player("Player 1", "O");
+const player2 = Player("Player 2", "X");
+const logs = document.getElementById("logs");
+
+let current_player = player1;
+
 function boxClicked(e) {
     console.log(e.srcElement);
+    gameBoard.play(current_player, e.srcElement.dataset.row, e.srcElement.dataset.col);
+
+    if(gameBoard.isGameOver()){
+        if(gameBoard.isDraw()) {
+            logs.innerHTML = "Game is a draw, no one wins."
+        } else if (gameBoard.isWin()) {
+            logs.innerHTML = `${current_player.getName()} wins !`;
+        } else {
+            logs.innerHTML = "Error - Can't resolve game's status"
+        }
+    } else {
+        current_player = (current_player == player1) ? player2 : player1;
+
+        logs.innerHTML = `${current_player.getName()}'s turn`;    
+    }
 }
 
 
-const player1 = Player("Player 1", "O");
-const player2 = Player("Player 2", "X");
 
+/*
 gameBoard.play(player1, 0, 0);
 gameBoard.play(player2, 0, 1);
 gameBoard.play(player1, 0, 2);
@@ -141,3 +161,4 @@ gameBoard.play(player2, 1, 2);
 gameBoard.play(player1, 2, 0);
 gameBoard.play(player2, 2, 1);
 gameBoard.play(player1, 2, 2);
+*/
