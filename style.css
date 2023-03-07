@@ -67,6 +67,11 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 150px;
+    border-radius: 3px;
+}
+
+.box:hover {
+    background-color: rgb(178, 197, 190);
 }
 
 #logs {
