@@ -12,7 +12,6 @@ const gameBoard = (() => {
 
    let draw = false;
    let win = false;
-   let winner = "";
 
    const isGameOver = () => {
         return draw || win;
@@ -83,11 +82,9 @@ const gameBoard = (() => {
         drawGame();
 
         if(gameWon()) {
-            console.log(`${player.getName()} won the game !`);
             win = true;
             winner = player.getName();
         } else if(boardFull()){
-            //console.log("The game ends in a draw !");
             draw = true;
         }
     };
@@ -106,6 +103,12 @@ const gameBoard = (() => {
         for (let box of boardDisplay.children) {
             box.innerHTML = "";
         }
+        board[0] = ["", "", ""];
+        board[1] = ["", "", ""];
+        board[2] = ["", "", ""];
+
+        win = false;
+        draw = false;
     };
 
    return {play, isGameOver, isDraw, isWin, clearGame, print};
@@ -113,15 +116,22 @@ const gameBoard = (() => {
 
 
 const Player = (playerName, playerMark) => {
+
+    let name = playerName;
+
     const getMark = () => {
         return playerMark;
     };
 
     const getName = () => {
-        return playerName;
+        return name;
     };
 
-    return {getMark, getName};
+    const setName = (newName) => {
+        name = newName;
+    };
+
+    return {getMark, getName, setName};
 }
 
 const player1 = Player("Player 1", "O");
@@ -131,7 +141,6 @@ const logs = document.getElementById("logs");
 let current_player = player1;
 
 function boxClicked(e) {
-    console.log(e.srcElement);
     gameBoard.play(current_player, e.srcElement.dataset.row, e.srcElement.dataset.col);
 
     if(gameBoard.isGameOver()){
@@ -149,16 +158,23 @@ function boxClicked(e) {
     }
 }
 
+const newGameBtn = document.getElementById("new-game");
+const playerOneInput = document.getElementById("player-one");
+const playerTwoInput = document.getElementById("player-two");
 
+newGameBtn.onclick = resetGame;
 
-/*
-gameBoard.play(player1, 0, 0);
-gameBoard.play(player2, 0, 1);
-gameBoard.play(player1, 0, 2);
-gameBoard.play(player2, 1, 0);
-gameBoard.play(player1, 1, 1);
-gameBoard.play(player2, 1, 2);
-gameBoard.play(player1, 2, 0);
-gameBoard.play(player2, 2, 1);
-gameBoard.play(player1, 2, 2);
-*/
+function resetGame(e) {
+    e.preventDefault();
+
+    gameBoard.clearGame();
+
+    let newPlayerOneName = playerOneInput.value ? playerOneInput.value : "Player 1";
+    player1.setName(newPlayerOneName);
+
+    let newPlayerTwoName = playerTwoInput.value ? playerTwoInput.value : "Player 2";
+    player2.setName(newPlayerTwoName);
+
+    current_player = player1;
+    logs.innerHTML = `${newPlayerOneName}'s turn`;
+}

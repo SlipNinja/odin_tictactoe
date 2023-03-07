@@ -11,9 +11,11 @@
 <body>
     <div class="header">
         <div class="title-header">My Tic Tac Toe</div>
-        <div class="controls">
-            <button>New Game</button>
-        </div>
+        <form id="addForm">
+            <button id="new-game" type="submit" value="Submit">New Game</button>
+            <input type="text" id="player-one" name="player-one" placeholder="Player 1">
+            <input type="text" id="player-two" name="player-two" placeholder="Player 2">
+        </form>
     </div>
     <div id="board">
         <div class="box" data-row="0" data-col="0"></div>
